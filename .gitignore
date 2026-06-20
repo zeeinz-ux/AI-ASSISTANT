@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+
+# Temporary
+tmp/
+temp/
+
+# Archives
+*.zip
+
+# Continue Cache
+.continue/index/
+.continue/cache/
+
+# Coverage
+coverage/

@@ -1,0 +1,39 @@
+name: Synapse AI Config
+version: 0.1.0
+schema: v1
+
+models:
+  - name: Synapse Local (Qwen2.5-Coder)
+    provider: ollama
+    model: qwen2.5-coder:7b
+    roles:
+      - chat
+      - edit
+      - apply
+
+  - name: Synapse Autocomplete
+    provider: ollama
+    model: qwen2.5-coder:7b
+    roles:
+      - autocomplete
+
+  # Cloud fallback — isi apiKey lewat secrets, jangan hardcode di sini.
+  # Cek nama model terbaru di dashboard Gemini/Groq sebelum dipakai,
+  # karena model ID sering berubah.
+  - name: Synapse Cloud (Gemini)
+    provider: gemini
+    model: gemini-3.5-flash
+    apiKey: ${{ env.GEMINI_API_KEY }}
+    roles:
+      - chat
+
+  - name: Synapse Cloud (Groq)
+    provider: groq
+    model: llama-3.3-70b-versatile
+    apiKey: ${{ env.GROQ_API_KEY }}
+    roles:
+      - chat
+
+rules:
+  - Selalu asumsikan TypeScript, bukan JavaScript, kecuali file-nya .js
+  - Ikuti style kode yang sudah ada di file aktif

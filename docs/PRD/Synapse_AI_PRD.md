@@ -1,4 +1,5 @@
 # Synapse AI — PRD
+
 ## AI Coding Assistant (Hybrid Local + Cloud)
 
 ## 1. Product Overview
@@ -8,6 +9,7 @@ Synapse AI adalah **AI Coding Assistant berbasis VS Code** yang membantu develop
 > **Local-first AI (gratis, offline) + Cloud AI fallback (free-tier / token-based)**
 
 Target utama Synapse AI adalah menjadi alternatif GitHub Copilot yang:
+
 - gratis
 - bisa berjalan offline
 - bisa memakai cloud AI saat dibutuhkan
@@ -18,6 +20,7 @@ Target utama Synapse AI adalah menjadi alternatif GitHub Copilot yang:
 ## 2. Product Vision
 
 Membangun asisten coding yang:
+
 - memahami konteks file aktif di VS Code
 - memberi suggestion kode secara inline
 - membantu debugging
@@ -29,12 +32,14 @@ Membangun asisten coding yang:
 ## 3. Product Goals
 
 ### Primary Goals
+
 - AI coding assistant gratis seperti Copilot
 - Bisa berjalan offline tanpa internet
 - Terintegrasi langsung di VS Code
 - Membantu coding, debugging, dan refactoring
 
 ### Secondary Goals
+
 - Support cloud AI fallback (Gemini / Groq)
 - Smart routing AI untuk memilih model terbaik otomatis
 - Ringan di laptop mid-range dengan RAM 16GB
@@ -44,6 +49,7 @@ Membangun asisten coding yang:
 ## 4. Non-Goals (MVP)
 
 Versi awal ini tidak mencakup:
+
 - web dashboard / SaaS platform
 - multi-user system
 - training model AI sendiri
@@ -55,6 +61,7 @@ Versi awal ini tidak mencakup:
 ## 5. MVP Scope
 
 ### Core Features
+
 - Inline code completion seperti Copilot
 - Chat AI di VS Code
 - Explain code / function
@@ -63,6 +70,7 @@ Versi awal ini tidak mencakup:
 - Context dari file aktif
 
 ### Optional Features
+
 - Multi-file context awareness
 - Smart prompt enhancement
 - Model switching local/cloud
@@ -92,11 +100,13 @@ AI Router Service (Node.js + TypeScript)
 ## 7. AI Model Strategy
 
 ### Local First
+
 - Ollama + Qwen2.5-Coder 7B
 - Llama 3 8B (backup)
 - DeepSeek Coder (optional)
 
 ### Cloud Fallback
+
 - Gemini API (free tier + monthly quota)
 - Groq API (fast inference + limited free usage)
 - OpenAI API (optional paid expansion)
@@ -114,10 +124,12 @@ AI Router Service (Node.js + TypeScript)
 ## 9. Data Strategy
 
 ### MVP
+
 - Tidak memakai database
 - Context hanya dari file/workspace yang sedang aktif di VS Code
 
 ### Future
+
 - Memory system
 - Chat history database
 - Project awareness yang lebih kuat
@@ -127,34 +139,41 @@ AI Router Service (Node.js + TypeScript)
 ## 10. Tech Stack
 
 ### Core Language
+
 - TypeScript (Node.js)
 
 ### Backend / System Layer
+
 - Node.js runtime
 - Express.js sebagai AI Router API
 - Optional: Fastify sebagai alternatif
 
 ### AI Runtime Layer
+
 - Ollama
 - Qwen2.5-Coder 7B
 - Llama 3 / DeepSeek Coder (backup)
 
 ### Cloud AI Layer
+
 - Google Gemini API
 - Groq API
 - OpenAI API (optional)
 
 ### VS Code Integration Layer
+
 - Continue.dev extension
 - VS Code Workspace API
 
 ### Dev Environment
+
 - Windows OS
 - VS Code
 - Environment variables (.env)
 - Storage separation di D:\AI-TOOLS
 
 ### Optional Future Stack
+
 - PostgreSQL / SQLite
 - Redis
 - React + Vite
@@ -184,11 +203,13 @@ AI Router Service (Node.js + TypeScript)
 ## 13. Risks & Mitigation
 
 ### Risks
+
 - Model local lebih lambat dari cloud
 - Context window terbatas
 - Cloud API quota bisa habis
 
 ### Mitigation
+
 - Smart routing
 - Hybrid system local + cloud
 - Gunakan model 7B sebagai baseline
@@ -240,6 +261,7 @@ AI-TOOLS (workspace)
 ## 17. Prompts System
 
 Folder prompts berisi template instruksi AI seperti:
+
 - coding-assistant.md
 - debug-helper.md
 - refactor-guide.md
@@ -250,6 +272,7 @@ Folder prompts berisi template instruksi AI seperti:
 ## 18. Logs System
 
 Folder logs berisi:
+
 - ai-requests.log
 - ai-responses.log
 - errors.log
@@ -269,15 +292,18 @@ Folder logs berisi:
 ## 20. Roadmap
 
 ### Phase 2
+
 - Memory system berbasis database
 - Chat history
 - Project awareness
 
 ### Phase 3
+
 - AI agent mode (edit files otomatis)
 - Multi-step automation
 
 ### Phase 4
+
 - SaaS AI platform
 - Multi-user support
 
