@@ -4,61 +4,152 @@
 
 Synapse AI adalah Hybrid AI Coding Assistant yang menggabungkan Local AI dan Cloud AI melalui Intelligent Routing Layer.
 
-Project ini dibangun sebagai fondasi AI Coding Assistant yang:
+Project ini dibangun untuk memberikan pengalaman coding assistant yang cepat, hemat biaya, dan tetap dapat digunakan meskipun koneksi internet tidak tersedia.
 
-- Local-first
-- Hemat biaya penggunaan AI
-- Mendukung fallback otomatis
-- Dapat berjalan dengan atau tanpa cloud provider
-- Didesain untuk berkembang menjadi AI Agent
+---
+
+# Vision
+
+Membangun AI Coding Assistant yang:
+
+- Local First
+- Cloud Assisted
+- Cost Efficient
+- Privacy Friendly
+- Provider Agnostic
+- Future Agent Ready
 
 ---
 
 # Overview
 
-Synapse AI bertindak sebagai AI Router yang berada di antara IDE dan AI Provider.
+Synapse AI bukan model AI.
 
-Alih-alih mengirim semua request ke satu model, Synapse menganalisis kompleksitas task lalu menentukan provider yang paling sesuai.
+Synapse AI adalah AI Router yang bertugas menentukan provider AI terbaik berdasarkan kompleksitas task dan kondisi provider yang tersedia.
 
 Contoh:
 
-- Task sederhana → Ollama (Local AI)
+- Task sederhana → Ollama
 - Task kompleks → Gemini
 - Gemini gagal → Groq
 - Semua provider gagal → Error terstruktur
 
 ---
 
-# Features
+# Current Status
 
-## AI Router
+Version:
 
-- Automatic Task Classification
-- Intelligent Provider Selection
-- Local-First Strategy
-- Cloud Fallback Support
+```text
+v0.3.0
+```
 
-## Local AI
+## Completed
 
+### Phase 1 — Core Router Foundation
+
+- AI Router Service
+- Task Classification Engine
 - Ollama Integration
-- Qwen2.5-Coder Support
-- Offline Capability
-
-## Cloud AI
-
 - Gemini Integration
 - Groq Integration
+- Automatic Provider Routing
 
-## Reliability Layer
+### Phase 2 — Reliability Layer
 
 - Provider Health Monitoring
 - Automatic Provider Fallback
+- Continue-Compatible API
+- Structured Logging
+- Health Check Endpoint
+
+### Phase 3A.1 — Context Awareness Foundation
+
+- Context Builder
+- Workspace Context
+- File Context
+- Language Context
+- Selected Code Context
+
+## In Progress
+
+### Phase 3A.2 — Smart Context Collector
+
+- Automatic Workspace Detection
+- Automatic File Detection
+- Automatic Selected Code Detection
+
+## Planned
+
+### Phase 3B — Project Awareness
+
+- Project Structure Awareness
+- Package.json Awareness
+- Tech Stack Awareness
+
+### Phase 4 — Agent Layer
+
+- Tool Calling
+- Project Reasoning
+- Multi-file Reasoning
+
+### Phase 5 — SaaS Platform
+
+- Multi User
+- Team Workspace
+- Analytics Dashboard
+
+---
+
+# Architecture
+
+```text
+VS Code
+    ↓
+Continue.dev
+    ↓
+Synapse AI Router
+    ↓
+Task Classifier
+    ↓
+Provider Selection
+    ↓
+Fallback Engine
+    ↓
+
+┌────────────────────┐
+│ Local AI           │
+│ Ollama             │
+│ Qwen2.5-Coder 7B   │
+└────────────────────┘
+
+┌────────────────────┐
+│ Cloud AI           │
+│ Gemini             │
+│ Groq               │
+└────────────────────┘
+```
+
+---
+
+# Features
+
+## AI Routing
+
+- Intelligent Provider Selection
+- Task Complexity Classification
+- Local First Strategy
+
+## Reliability
+
+- Provider Health Check
+- Automatic Fallback
 - Structured Error Handling
 
-## Continue.dev Compatibility
+## Continue Compatibility
 
-- OpenAI-style Response Format
-- Continue Request Compatibility
+- Continue Request Support
+- OpenAI-Compatible Response Format
 - Messages Array Support
 
 ## Context Awareness
@@ -70,116 +161,15 @@ Contoh:
 
 ---
 
-# Current Status
+# Design Principles
 
-## Phase 1 — Core Router Foundation
-
-Completed
-
-- AI Router Service
-- Ollama Integration
-- Gemini Integration
-- Groq Integration
-- Task Classification Engine
-- Automatic Routing Engine
-
-## Phase 2 — Reliability Layer
-
-Completed
-
-- Provider Health Monitoring
-- Automatic Fallback Engine
-- Continue Compatibility Layer
-- Structured Logging
-- Health Check Endpoint
-
-## Phase 3 — Context Awareness
-
-Completed
-
-- Context Builder
-- Workspace Context
-- File Context
-- Language Context
-- Selected Code Context
-
-In Progress
-
-- Smart Context Collector
-- Continue Native Integration
-- Streaming Responses
-
----
-
-# Architecture
-
-```text
-VS Code
-   ↓
-Continue.dev
-   ↓
-Synapse AI Router
-   ↓
-Task Classifier
-   ↓
-Provider Selection
-   ↓
-Fallback Engine
-   ↓
-
-┌─────────────────────────────┐
-│ Local AI                    │
-│ Ollama + Qwen2.5-Coder      │
-└─────────────────────────────┘
-
-┌─────────────────────────────┐
-│ Cloud AI                    │
-│ Gemini                      │
-│ Groq                        │
-└─────────────────────────────┘
-```
-
----
-
-# Routing Logic
-
-## Simple Tasks
-
-Examples:
-
-- Explain code
-- Small refactor
-- Generate function
-- Fix typo
-- Autocomplete
-
-Provider:
-
-```text
-Ollama
-↓
-Qwen2.5-Coder
-```
-
-## Complex Tasks
-
-Examples:
-
-- System design
-- Architecture planning
-- Deep debugging
-- Large refactor
-- Multi-step reasoning
-
-Provider:
-
-```text
-Gemini
-↓
-Groq Fallback
-↓
-Ollama Last Resort
-```
+- Local First
+- Cloud When Necessary
+- No Database MVP
+- Cost Efficient
+- Provider Agnostic
+- Continue Compatible
+- Future Agent Ready
 
 ---
 
@@ -190,20 +180,12 @@ Ollama Last Resort
 | Language        | TypeScript       |
 | Runtime         | Node.js          |
 | Framework       | Express.js       |
+| HTTP Client     | Axios            |
 | Local AI        | Ollama           |
 | Local Model     | Qwen2.5-Coder 7B |
 | Cloud AI        | Gemini           |
 | Cloud Fallback  | Groq             |
 | IDE Integration | Continue.dev     |
-
----
-
-# Prerequisites
-
-- Node.js 18+
-- Ollama
-- VS Code
-- Continue.dev Extension
 
 ---
 
@@ -230,8 +212,8 @@ NODE_ENV=development
 OLLAMA_HOST=http://localhost:11434
 OLLAMA_MODEL=qwen2.5-coder:7b
 
-GEMINI_API_KEY=your_key_here
-GROQ_API_KEY=your_key_here
+GEMINI_API_KEY=your_gemini_api_key
+GROQ_API_KEY=your_groq_api_key
 ```
 
 ---
@@ -260,19 +242,27 @@ curl http://localhost:11434/api/tags
 
 # Run Development Server
 
+Development:
+
 ```bash
 npm run dev
 ```
 
-Server:
+Build:
 
-```text
-http://localhost:3000
+```bash
+npm run build
+```
+
+Production:
+
+```bash
+npm start
 ```
 
 ---
 
-# API Endpoints
+# API Reference
 
 ## Health Check
 
@@ -294,7 +284,7 @@ curl http://localhost:3000/health
 POST /api/chat
 ```
 
-Legacy Request:
+### Legacy Request
 
 ```json
 {
@@ -302,7 +292,7 @@ Legacy Request:
 }
 ```
 
-Continue-Compatible Request:
+### Continue-Compatible Request
 
 ```json
 {
@@ -315,11 +305,11 @@ Continue-Compatible Request:
 }
 ```
 
-Context-Aware Request:
+### Context-Aware Request
 
 ```json
 {
-  "prompt": "Refactor this code",
+  "prompt": "Refactor this function",
   "filePath": "src/routes/chat.route.ts",
   "language": "typescript",
   "workspace": "AI-ASSISTANT",
@@ -368,43 +358,50 @@ src/
 
 # Roadmap
 
-## Phase 1 — Router Foundation ✅
+## Phase 1 — Router Foundation
 
-- AI Router
-- Task Classification
-- Multi Provider Support
+✅ Complete
 
-## Phase 2 — Reliability Layer ✅
+## Phase 2 — Reliability Layer
 
-- Provider Health Monitoring
-- Automatic Fallback Engine
-- Continue Compatibility
+✅ Complete
 
-## Phase 3 — Context Awareness 🚧
+## Phase 3A — Context Awareness
 
-- Context Builder
-- Smart Context Collector
-- Workspace Awareness
-- Active File Awareness
+🚧 In Progress
+
+## Phase 3B — Project Awareness
+
+📌 Planned
 
 ## Phase 4 — Agent Layer
 
-- Project Awareness
-- Multi-file Reasoning
-- Tool Calling
-- Agent Workflows
+📌 Planned
+
+## Phase 5 — SaaS Platform
+
+📌 Planned
 
 ---
 
-# Design Principles
+# MVP Scope
 
-- Local First
-- Cloud When Necessary
-- Cost Efficient
-- Provider Agnostic
-- No Database (MVP)
-- Modular Architecture
-- Future Agent Ready
+Included:
+
+- AI Routing
+- Local AI
+- Cloud Fallback
+- Context Awareness
+- Continue Compatibility
+
+Excluded:
+
+- Database
+- User Accounts
+- Chat History Storage
+- RAG
+- Vector Database
+- Multi-Agent System
 
 ---
 
