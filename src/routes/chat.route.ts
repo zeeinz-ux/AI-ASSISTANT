@@ -17,6 +17,13 @@ import { resolveRelatedFiles } from "../core/relatedFiles";
 import { loadRelatedFiles } from "../core/fileReader";
 import { rankImports } from "../core/relevance";
 import { getProjectContext } from "../core/projectContext";
+import { selectPromptMode } from "../core/promptSelector";
+import { SYSTEM_PROMPTS } from "../core/systemPrompts";
+import { classifyDebugError } from "../core/debugClassifier";
+import { DEBUG_PROMPTS } from "../core/debugPrompts";
+import { classifyRefactorRequest } from "../core/refactorClassifier";
+import { REFACTOR_PROMPTS } from "../core/refactorPrompts";
+import { getProjectSummary } from "../core/projectSummary";
 
 export const chatRouter = Router();
 
@@ -98,6 +105,17 @@ chatRouter.post(
     const { projectInfo, projectStructure, keyFiles } = getProjectContext(
       process.cwd(),
     );
+    const summary = getProjectSummary(process.cwd());
+    const projectSummaryText = `
+Routes:
+${summary.routes.join("\n")}
+
+Core:
+${summary.core.join("\n")}
+
+Services:
+${summary.services.join("\n")}
+`;
     const importGraph = body.selectedCode
       ? analyzeImports(body.selectedCode)
       : { imports: [] };
@@ -117,7 +135,29 @@ chatRouter.post(
     console.log("RELATED FILES:");
     console.log(relatedFiles.map((file) => file.path));
 
-    const enrichedPrompt = buildContext(userPrompt, {
+    const mode = selectPromptMode(userPrompt);
+
+    console.log("PROMPT MODE:", mode);
+
+    let systemPrompt = SYSTEM_PROMPTS[mode];
+
+    if (mode === "debug") {
+      const category = classifyDebugError(userPrompt);
+
+      console.log("DEBUG CATEGORY:", category);
+
+      systemPrompt += "\n\n" + DEBUG_PROMPTS[category];
+    }
+
+    if (mode === "refactor") {
+      const category = classifyRefactorRequest(userPrompt);
+
+      console.log("REFACTOR CATEGORY:", category);
+
+      systemPrompt += "\n\n" + REFACTOR_PROMPTS[category];
+    }
+
+    const contextPrompt = buildContext(userPrompt, {
       workspace: body.workspace,
       filePath: body.filePath,
       language: body.language,
@@ -129,9 +169,14 @@ chatRouter.post(
 
       projectStructure,
       keyFiles,
+
+      projectSummary: projectSummaryText,
+
       importGraph: importGraph.imports,
       relatedFiles,
     });
+
+    const enrichedPrompt = `${systemPrompt.trim()}\n\n${contextPrompt}`;
 
     if (process.env.NODE_ENV !== "production") {
       console.log("\n===== ENRICHED PROMPT =====");

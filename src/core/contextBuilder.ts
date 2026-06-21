@@ -25,6 +25,11 @@ export function buildContext(prompt: string, context?: ContextPayload): string {
   if (context?.keyFiles && context.keyFiles.length > 0) {
     sections.push(`Key Files:\n${context.keyFiles.join("\n")}`);
   }
+
+  if (context?.projectSummary) {
+    sections.push(`Project Summary:\n${context.projectSummary}`);
+  }
+
   if (context?.importGraph && context.importGraph.length > 0) {
     sections.push(`Direct Dependencies:\n${context.importGraph.join("\n")}`);
   }

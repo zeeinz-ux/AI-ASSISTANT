@@ -46,6 +46,8 @@ export interface ContextPayload {
   keyFiles?: string[];
   importGraph?: string[];
   relatedFiles?: RelatedFileContext[];
+
+  projectSummary?: string;
 }
 
 // ============================================================================
