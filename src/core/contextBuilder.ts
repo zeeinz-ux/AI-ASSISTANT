@@ -22,6 +22,9 @@ export function buildContext(prompt: string, context?: ContextPayload): string {
   if (context?.projectStructure && context.projectStructure.length > 0) {
     sections.push(`Project Structure:\n${context.projectStructure.join("\n")}`);
   }
+  if (context?.keyFiles && context.keyFiles.length > 0) {
+    sections.push(`Key Files:\n${context.keyFiles.join("\n")}`);
+  }
 
   // ============================================================================
   // WORKSPACE CONTEXT

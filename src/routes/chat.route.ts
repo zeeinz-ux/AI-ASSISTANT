@@ -14,6 +14,7 @@ import { buildContext } from "../core/contextBuilder";
 import { logger } from "../utils/logger";
 import { analyzeProject } from "../core/projectAnalyzer";
 import { getProjectStructure } from "../core/projectStructure";
+import { getKeyFiles } from "../core/keyFiles";
 
 export const chatRouter = Router();
 
@@ -88,6 +89,7 @@ chatRouter.post(
 
     const projectInfo = analyzeProject(process.cwd());
     const structure = getProjectStructure(process.cwd());
+    const keyFiles = getKeyFiles(process.cwd());
     console.log("CWD:", process.cwd());
     console.log("PROJECT INFO:", projectInfo);
 
@@ -102,6 +104,7 @@ chatRouter.post(
       packageManager: projectInfo.packageManager,
 
       projectStructure: structure.folders,
+      keyFiles: keyFiles.files,
     });
 
     if (process.env.NODE_ENV !== "production") {

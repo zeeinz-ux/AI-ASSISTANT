@@ -39,6 +39,8 @@ export interface ContextPayload {
   packageManager?: string;
 
   projectStructure?: string[];
+
+  keyFiles?: string[];
 }
 
 // ============================================================================
