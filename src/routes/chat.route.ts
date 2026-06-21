@@ -16,6 +16,8 @@ import { analyzeProject } from "../core/projectAnalyzer";
 import { getProjectStructure } from "../core/projectStructure";
 import { getKeyFiles } from "../core/keyFiles";
 import { analyzeImports } from "../core/importGraph";
+import { resolveRelatedFiles } from "../core/relatedFiles";
+import { loadRelatedFiles } from "../core/fileReader";
 
 export const chatRouter = Router();
 
@@ -73,6 +75,12 @@ chatRouter.post(
   async (req: Request<{}, {}, ContinueChatRequest>, res: Response) => {
     const start = Date.now();
     const body = req.body as ContinueChatRequest & Partial<ChatRequestBody>;
+    console.log("FILE PATH:", body.filePath);
+    console.log("WORKSPACE:", body.workspace);
+    console.log("LANGUAGE:", body.language);
+    console.log("SELECTED CODE:", body.selectedCode);
+    console.log("MESSAGES:", body.messages?.length);
+
     console.log("\n===== REQUEST BODY =====");
     console.log(JSON.stringify(body, null, 2));
     console.log("========================\n");
@@ -94,8 +102,16 @@ chatRouter.post(
     const importGraph = body.selectedCode
       ? analyzeImports(body.selectedCode)
       : { imports: [] };
+
     console.log("CWD:", process.cwd());
     console.log("PROJECT INFO:", projectInfo);
+
+    const relatedPaths = resolveRelatedFiles(importGraph.imports);
+
+    const relatedFiles = loadRelatedFiles(relatedPaths);
+
+    console.log("RELATED FILES:");
+    console.log(relatedFiles.map((file) => file.path));
 
     const enrichedPrompt = buildContext(userPrompt, {
       workspace: body.workspace,
@@ -110,6 +126,7 @@ chatRouter.post(
       projectStructure: structure.folders,
       keyFiles: keyFiles.files,
       importGraph: importGraph.imports,
+      relatedFiles,
     });
 
     if (process.env.NODE_ENV !== "production") {

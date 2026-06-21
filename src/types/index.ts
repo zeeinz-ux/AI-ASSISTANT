@@ -27,6 +27,10 @@ export interface ChatResponseBody {
 // ============================================================================
 // PHASE 3A - CONTEXT ENGINE
 // ============================================================================
+export interface RelatedFileContext {
+  path: string;
+  content: string;
+}
 
 export interface ContextPayload {
   workspace?: string;
@@ -41,6 +45,7 @@ export interface ContextPayload {
   projectStructure?: string[];
   keyFiles?: string[];
   importGraph?: string[];
+  relatedFiles?: RelatedFileContext[];
 }
 
 // ============================================================================

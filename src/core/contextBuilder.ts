@@ -28,7 +28,13 @@ export function buildContext(prompt: string, context?: ContextPayload): string {
   if (context?.importGraph && context.importGraph.length > 0) {
     sections.push(`Direct Dependencies:\n${context.importGraph.join("\n")}`);
   }
+  if (context?.relatedFiles && context.relatedFiles.length > 0) {
+    const relatedFilesText = context.relatedFiles
+      .map((file) => `File: ${file.path}\n\n${file.content}`)
+      .join("\n\n--------------------\n\n");
 
+    sections.push(`Related Files:\n\n${relatedFilesText}`);
+  }
   // ============================================================================
   // WORKSPACE CONTEXT
   // ============================================================================
