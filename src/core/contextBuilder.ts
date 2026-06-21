@@ -19,6 +19,10 @@ export function buildContext(prompt: string, context?: ContextPayload): string {
     sections.push(`Package Manager: ${context.packageManager}`);
   }
 
+  if (context?.projectStructure && context.projectStructure.length > 0) {
+    sections.push(`Project Structure:\n${context.projectStructure.join("\n")}`);
+  }
+
   // ============================================================================
   // WORKSPACE CONTEXT
   // ============================================================================

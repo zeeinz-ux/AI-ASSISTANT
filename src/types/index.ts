@@ -37,7 +37,10 @@ export interface ContextPayload {
   projectName?: string;
   framework?: string;
   packageManager?: string;
+
+  projectStructure?: string[];
 }
+
 // ============================================================================
 // CONTINUE.DEV INTEGRATION
 // ============================================================================
