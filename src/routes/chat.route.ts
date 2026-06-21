@@ -12,6 +12,7 @@ import {
 } from "../types";
 import { buildContext } from "../core/contextBuilder";
 import { logger } from "../utils/logger";
+import { analyzeProject } from "../core/projectAnalyzer";
 
 export const chatRouter = Router();
 
@@ -84,11 +85,19 @@ chatRouter.post(
 
     const { userPrompt, isContinueRequest } = extracted;
 
+    const projectInfo = analyzeProject(process.cwd());
+    console.log("CWD:", process.cwd());
+    console.log("PROJECT INFO:", projectInfo);
+
     const enrichedPrompt = buildContext(userPrompt, {
+      workspace: body.workspace,
       filePath: body.filePath,
       language: body.language,
       selectedCode: body.selectedCode,
-      workspace: body.workspace,
+
+      projectName: projectInfo.projectName,
+      framework: projectInfo.framework,
+      packageManager: projectInfo.packageManager,
     });
 
     if (process.env.NODE_ENV !== "production") {

@@ -3,6 +3,26 @@ import { ContextPayload } from "../types";
 export function buildContext(prompt: string, context?: ContextPayload): string {
   const sections: string[] = [];
 
+  // ============================================================================
+  // PROJECT AWARENESS
+  // ============================================================================
+
+  if (context?.projectName) {
+    sections.push(`Project: ${context.projectName}`);
+  }
+
+  if (context?.framework) {
+    sections.push(`Framework: ${context.framework}`);
+  }
+
+  if (context?.packageManager) {
+    sections.push(`Package Manager: ${context.packageManager}`);
+  }
+
+  // ============================================================================
+  // WORKSPACE CONTEXT
+  // ============================================================================
+
   if (context?.workspace) {
     sections.push(`Workspace: ${context.workspace}`);
   }
@@ -18,6 +38,10 @@ export function buildContext(prompt: string, context?: ContextPayload): string {
   if (context?.selectedCode) {
     sections.push(`Selected Code:\n${context.selectedCode}`);
   }
+
+  // ============================================================================
+  // USER REQUEST
+  // ============================================================================
 
   sections.push(`User Request:\n${prompt}`);
 

@@ -29,12 +29,15 @@ export interface ChatResponseBody {
 // ============================================================================
 
 export interface ContextPayload {
+  workspace?: string;
   filePath?: string;
   language?: string;
   selectedCode?: string;
-  workspace?: string;
-}
 
+  projectName?: string;
+  framework?: string;
+  packageManager?: string;
+}
 // ============================================================================
 // CONTINUE.DEV INTEGRATION
 // ============================================================================
