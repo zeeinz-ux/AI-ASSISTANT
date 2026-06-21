@@ -18,6 +18,7 @@ import { getKeyFiles } from "../core/keyFiles";
 import { analyzeImports } from "../core/importGraph";
 import { resolveRelatedFiles } from "../core/relatedFiles";
 import { loadRelatedFiles } from "../core/fileReader";
+import { rankImports } from "../core/relevance";
 
 export const chatRouter = Router();
 
@@ -106,7 +107,12 @@ chatRouter.post(
     console.log("CWD:", process.cwd());
     console.log("PROJECT INFO:", projectInfo);
 
-    const relatedPaths = resolveRelatedFiles(importGraph.imports);
+    const rankedImports = rankImports(importGraph.imports, userPrompt);
+
+    console.log("RANKED IMPORTS:");
+    console.log(rankedImports);
+
+    const relatedPaths = resolveRelatedFiles(rankedImports);
 
     const relatedFiles = loadRelatedFiles(relatedPaths);
 
