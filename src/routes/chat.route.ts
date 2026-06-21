@@ -15,6 +15,7 @@ import { logger } from "../utils/logger";
 import { analyzeProject } from "../core/projectAnalyzer";
 import { getProjectStructure } from "../core/projectStructure";
 import { getKeyFiles } from "../core/keyFiles";
+import { analyzeImports } from "../core/importGraph";
 
 export const chatRouter = Router();
 
@@ -90,6 +91,9 @@ chatRouter.post(
     const projectInfo = analyzeProject(process.cwd());
     const structure = getProjectStructure(process.cwd());
     const keyFiles = getKeyFiles(process.cwd());
+    const importGraph = body.selectedCode
+      ? analyzeImports(body.selectedCode)
+      : { imports: [] };
     console.log("CWD:", process.cwd());
     console.log("PROJECT INFO:", projectInfo);
 
@@ -105,6 +109,7 @@ chatRouter.post(
 
       projectStructure: structure.folders,
       keyFiles: keyFiles.files,
+      importGraph: importGraph.imports,
     });
 
     if (process.env.NODE_ENV !== "production") {
